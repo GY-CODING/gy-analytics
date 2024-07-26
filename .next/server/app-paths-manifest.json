@@ -1,0 +1,5 @@
+{
+  "/api/characters/story/route": "app/api/characters/story/route.js",
+  "/api/characters/game/route": "app/api/characters/game/route.js",
+  "/dashboard/page": "app/dashboard/page.js"
+}
