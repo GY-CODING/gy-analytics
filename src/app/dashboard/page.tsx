@@ -10,9 +10,10 @@ import { KpiComponentCircle } from '@/components/KpiComponentCircle'
 export default function Page(): JSX.Element {
     const { data: charactersStory, isLoading: isLoadingStory, isError: isErrorStory, countCharactersByWorld: countCharactersStoryByWorld } = useCharactersStory()
     const { data: charactersGame, isLoading: isLoadingGame, isError: isErrorGame, countCharactersByWorld: countCharactersGameByWorld } = useCharactersGame()
+
     const colors1 = ['#FFC107', '#FF5722']
     const colors2 = ['#9929ea', '#5808fb']
-    const colors3 = ['#14b8a6', '#2dd4bf']
+    const colors3 = ['#fcd34d', '#e879f9', '#16a34a', '#9333ea', '#d97706', '#22d3ee', '#dc2626', '#34d399', '#5b21b6']
     const colors4 = ['#22d3ee', '#0891b2']
     const colors5 = ['#fb7185', '#db2777']
     const colors6 = ['#f472b6', '#db2777']
@@ -36,7 +37,7 @@ export default function Page(): JSX.Element {
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'center',
-            alignItems: 'center',
+            alignItems: 'start',
             flexWrap: 'wrap',
             overflow: 'auto',
             gap: '10px',
@@ -44,7 +45,7 @@ export default function Page(): JSX.Element {
         }}>
             <KpiComponentBars title={'Dinero en putas'} colors={colors1} datasetA={countCharactersGameByWorld()} datasetB={countCharactersStoryByWorld()} dataKey={["world"]} />
             <KpiComponentLines title={'Dinero en farlopa'} colors={colors2} datasetA={countCharactersGameByWorld()} datasetB={countCharactersStoryByWorld()} dataKey={["world"]} />
-            <KpiComponentCircle title={'Dinero en coca'} colors={colors2} datasetA={countCharactersGameByWorld()} datasetB={countCharactersStoryByWorld()} dataKey={["world"]} />
+            <KpiComponentCircle title={'Dinero en coca'} colors={colors3} dataset={countCharactersGameByWorld()} isLoading={isLoadingGame} />
             {/* <KpiComponentBars title={'Dinero en heroina'} colors={colors3} datasetA={countCharactersGameByWorld()} datasetB={countCharactersStoryByWorld()} dataKey={["world"]} /> */}
             <KpiComponentBars title={'Dinero en armas'} colors={colors4} datasetA={countCharactersGameByWorld()} datasetB={countCharactersStoryByWorld()} dataKey={["world"]} />
             <KpiComponentBars title={'Detenciones'} colors={colors5} datasetA={countCharactersGameByWorld()} datasetB={countCharactersStoryByWorld()} dataKey={["world"]} />

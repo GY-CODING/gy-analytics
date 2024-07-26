@@ -1,34 +1,29 @@
 'use client'
-import { Box, Typography } from '@mui/material'
+import { Box, CircularProgress, Typography } from '@mui/material'
 import React from 'react'
 import { PieChart } from '@mui/x-charts'
+import { CircleComponentProps } from '@/domain/Intefaces';
 
-export function KpiComponentCircle({ title, colors, datasetA, datasetB }: BarComponentLinesProps): JSX.Element {
+export function KpiComponentCircle({ title, colors, dataset, isLoading }: CircleComponentProps): JSX.Element {
+    let data: { id: string, value: number, label: string }[];
 
-    const valueFormatter = (value: number | null) => `${value} characters`;
-
-    const chartDataStory = Object.entries(datasetA).map(([world, count]) => ({
-        world,
-        count,
-    }));
-    const chartDataGame = Object.entries(datasetB!).map(([world, count]) => ({
-        world,
-        count,
+    const chartDataStory = Object.entries(dataset).map(([world, count]) => ({
+        label: world,
+        value: count,
     }));
 
-    const combinedDataset = chartDataGame.map((gameData, index) => ({
-        world: gameData.world,
-        storyCount: chartDataStory[index].count,
-        gameCount: gameData.count,
-    }));
-
-
-    const data = [
-        { id: 0, value: 10, label: 'series A' },
-        { id: 1, value: 15, label: 'series B' },
-        { id: 2, value: 20, label: 'series C' },
-    ];
-
+    if (isLoading) {
+        return (
+            <CircularProgress />
+        )
+    } else {
+        data = Object.entries(dataset).map(([world, count], index) => ({
+            id: world,
+            value: count,
+            label: world,
+            color: colors[index % colors.length]
+        }));
+    }
     return (
         <Box sx={{
             filter: "drop-shadow(0px 0px 10px #09090b)",
@@ -36,37 +31,35 @@ export function KpiComponentCircle({ title, colors, datasetA, datasetB }: BarCom
             <Typography variant="h6" sx={{ textAlign: 'left', marginLeft: '2%', fontFamily: 'lexend', color: '#e5e5e5' }}>{title}</Typography>
             <PieChart
 
-                xAxis={[{ scaleType: 'band', data: combinedDataset.map((data) => data.world), tickFontSize: 10 }]}
+                xAxis={[{ scaleType: 'band', data: chartDataStory.map((data) => data.label), tickFontSize: 10 }]}
                 series={[
                     {
                         data,
                         highlightScope: { faded: 'global', highlighted: 'item' },
-                        faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
+                        faded: { innerRadius: 10, additionalRadius: -10, color: 'transparent' },
+                        innerRadius: 30,
+                        outerRadius: 130,
+                        paddingAngle: 4,
+                        cornerRadius: 5,
+                        startAngle: 0,
+                        endAngle: 360,
+                        cx: 100,
+                        cy: 150,
                     },
                 ]}
                 sx={{
                     'tspan': {
-                        fill: 'transparent',
+                        fill: 'white',
                         userSelect: 'none',
-                        pointerEvents: 'none'
+                        pointerEvents: 'none',
+                        margin: '10px'
                     },
-                    '& .MuiChartsAxis-line': { stroke: 'transparent', display: 'none' },
-                    '& .MuiChartsAxis-tick': { stroke: 'transparent', display: 'none' },
                     backgroundColor: '#262626', borderRadius: '10px',
                 }}
                 colors={colors}
                 width={470}
-                dataset={combinedDataset.map((data) => ({ world: data.world as string, storyCount: data.storyCount, gameCount: data.gameCount }))}
                 height={320}
                 viewBox={{ x: -50, y: -30, width: 500, height: 380 }} />
         </Box>
     )
-}
-
-interface BarComponentLinesProps {
-    title: string;
-    colors: string[];
-    datasetA: Record<string, number>;
-    datasetB?: Record<string, number>;
-    dataKey: string[];
 }

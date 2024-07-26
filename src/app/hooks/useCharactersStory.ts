@@ -1,15 +1,7 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-
 import { Character } from '@/domain/Character';
+import { useCharactersType } from '@/domain/Intefaces';
 import { getCharactersStory } from '@/services/Characters';
 import useSWR from 'swr';
-
-interface useCharactersType {
-  data: Character[];
-  isError: any;
-  isLoading: boolean;
-  countCharactersByWorld: () => Record<string, number>;
-}
 
 export function useCharactersStory(): useCharactersType {
   const {

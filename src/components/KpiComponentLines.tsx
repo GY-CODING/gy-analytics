@@ -2,19 +2,15 @@
 import { Box, Typography } from '@mui/material'
 import React from 'react'
 import { BarChart, LineChart } from '@mui/x-charts'
+import { convertToDataSet } from '@/app/utils/utils';
+import { BarComponentLinesProps } from '@/domain/Intefaces';
 
 export function KpiComponentLines({ title, colors, datasetA, datasetB }: BarComponentLinesProps): JSX.Element {
 
     const valueFormatter = (value: number | null) => `${value} characters`;
 
-    const chartDataStory = Object.entries(datasetA).map(([world, count]) => ({
-        world,
-        count,
-    }));
-    const chartDataGame = Object.entries(datasetB!).map(([world, count]) => ({
-        world,
-        count,
-    }));
+    const chartDataStory = convertToDataSet(datasetA);
+    const chartDataGame = convertToDataSet(datasetB!);
 
     const combinedDataset = chartDataGame.map((gameData, index) => ({
         world: gameData.world,
@@ -52,10 +48,3 @@ export function KpiComponentLines({ title, colors, datasetA, datasetB }: BarComp
     )
 }
 
-interface BarComponentLinesProps {
-    title: string;
-    colors: string[];
-    datasetA: Record<string, number>;
-    datasetB?: Record<string, number>;
-    dataKey: string[];
-}

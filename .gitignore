@@ -71,6 +71,7 @@ playground.xcworkspace
 # .swiftpm
 
 .build/
+.next/
 
 # CocoaPods
 #

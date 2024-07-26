@@ -1,4 +1,4 @@
-// File: /Users/guillermofiguerasjimenez/Projects/gycoding/gy-analytics/src/app/api/characters/game/route.ts
+// File: C:\Users\willi\Escritorio\PC\Programacion\gycoding\gy-analytics\src\app\api\characters\game\route.ts
 import * as entry from '../../../../../../src/app/api/characters/game/route.js'
 import type { NextRequest } from 'next/server.js'
 
